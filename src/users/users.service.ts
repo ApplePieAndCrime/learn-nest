@@ -6,20 +6,20 @@ import { RolesService } from 'src/roles/roles.service';
 
 @Injectable()
 export class UsersService {
-    constructor(
-        @InjectModel(User) private userRepository: typeof User,
-        private roleService : RolesService
-    ){}
+  constructor(
+    @InjectModel(User) private userRepository: typeof User,
+    private roleService: RolesService,
+  ) {}
 
-    async createUser(dto:CreateUserDto){
-        const user = await this.userRepository.create(dto)
-        const role = await this.roleService.getRoleByValue('USER')
-        console.log('role',role)
-        await user.$set('roles',[role.id])
-        return user
-    }
+  async createUser(dto: CreateUserDto) {
+    const user = await this.userRepository.create(dto);
+    const role = await this.roleService.getRoleByValue('USER');
+    console.log('role', role);
+    await user.$set('roles', [role.id]);
+    return user;
+  }
 
-    async getAllUsers(){
-        return this.userRepository.findAll({include:{all:true}})
-    }
+  async getAllUsers() {
+    return this.userRepository.findAll({ include: { all: true } });
+  }
 }
